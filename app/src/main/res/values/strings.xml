@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ExtClipboardManager</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_fragment_label">ExtClipboardManager</string>
+    <string name="tile_control_service_label" >ExtClipboardManager</string>
+    <string name="enabled">Enable</string>
+    <string name="disabled">Disable</string>
+</resources>
