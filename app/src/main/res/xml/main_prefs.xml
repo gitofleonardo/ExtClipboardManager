@@ -9,7 +9,7 @@
         android:key="about_project"
         android:title="Source Code">
         <intent android:action="android.intent.action.VIEW"
-            android:data="https://githuib.com/gitofleonardo/ExtClipboardManager">
+            android:data="https://github.com/gitofleonardo/ExtClipboardManager">
         </intent>
     </Preference>
 </PreferenceScreen>
