@@ -7,6 +7,46 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.hhvvg.ecm.MainFragment"
-        android:label="@string/main_fragment_label" />
+        android:name="com.hhvvg.ecm.ui.fragment.MainFragment"
+        android:label="@string/main_fragment_label" >
+        <action
+            android:id="@+id/action_mainFragment_to_readStrategyFragment"
+            app:destination="@id/readStrategyFragment"
+            app:enterAnim="@anim/anim_open_enter"
+            app:exitAnim="@anim/anim_open_exit"
+            app:popEnterAnim="@anim/anim_close_enter"
+            app:popExitAnim="@anim/anim_close_exit"/>
+        <action
+            android:id="@+id/action_mainFragment_to_writeStrategyFragment"
+            app:destination="@id/writeStrategyFragment"
+            app:enterAnim="@anim/anim_open_enter"
+            app:exitAnim="@anim/anim_open_exit"
+            app:popEnterAnim="@anim/anim_close_enter"
+            app:popExitAnim="@anim/anim_close_exit"/>
+        <action
+            android:id="@+id/action_mainFragment_to_autoClearStrategyFragment"
+            app:destination="@id/autoClearStrategyFragment"
+            app:enterAnim="@anim/anim_open_enter"
+            app:exitAnim="@anim/anim_open_exit"
+            app:popEnterAnim="@anim/anim_close_enter"
+            app:popExitAnim="@anim/anim_close_exit"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/readStrategyFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.ReadStrategyFragment"
+        android:label="@string/read_strategy_title"
+        tools:layout="@layout/fragment_read_strategy"/>
+
+    <fragment
+        android:id="@+id/writeStrategyFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.WriteStrategyFragment"
+        android:label="@string/write_strategy_title"
+        tools:layout="@layout/fragment_write_strategy"/>
+
+    <fragment
+        android:id="@+id/autoClearStrategyFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.AutoClearStrategyFragment"
+        android:label="@string/auto_clear_title"
+        tools:layout="@layout/fragment_auto_clear_strategy"/>
 </navigation>

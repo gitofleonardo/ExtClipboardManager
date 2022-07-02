@@ -2,6 +2,10 @@ package com.hhvvg.ecm
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.annotation.ColorInt
+import com.hhvvg.ecm.service.ExtendedClipboardService
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge
 import de.robv.android.xposed.XposedHelpers
@@ -148,3 +152,8 @@ fun Context.getSystemExtClipboardService(): IExtClipboardService? {
     ) ?: return null
     return IExtClipboardService.Stub.asInterface(binder)
 }
+
+@ColorInt
+fun Context.themeColor(@AttrRes attrRes: Int): Int = TypedValue()
+    .apply { theme.resolveAttribute (attrRes, this, true) }
+    .data

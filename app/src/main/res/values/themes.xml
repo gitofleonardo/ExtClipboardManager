@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.ExtClipboardManager" parent="Base.Theme.ExtClipboardManager" />
+
+    <style name="BaseBottomSheetStyle" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>

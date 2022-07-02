@@ -1,6 +1,7 @@
 package com.hhvvg.ecm
 
 import android.content.Context
+import com.hhvvg.ecm.service.ExtendedClipboardService
 import de.robv.android.xposed.*
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 

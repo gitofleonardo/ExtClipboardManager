@@ -1,4 +1,4 @@
-package com.hhvvg.ecm
+package com.hhvvg.ecm.configuration
 
 import android.os.Handler
 import android.os.HandlerThread
@@ -53,6 +53,21 @@ class ExtConfigurationStore {
             configuration.enable = value
             workHandler.post(this::saveConfiguration)
         }
+    var autoClearEnable: Boolean
+        get() = configuration.autoClearEnable
+        set(value) {
+            configuration.autoClearEnable = value
+            workHandler.post(this::saveConfiguration)
+        }
+    val autoClearStrategy: List<AutoClearStrategyInfo>
+        get() = configuration.autoClearStrategies
+
+    var autoClearTimeout: Long
+        get() = configuration.autoClearTimeout
+        set(value) {
+            configuration.autoClearTimeout = value
+            workHandler.post(this::saveConfiguration)
+        }
 
     init {
         configuration = try {
@@ -60,8 +75,20 @@ class ExtConfigurationStore {
             val gson = Gson()
             gson.fromJson(json, Configuration::class.java)
         }catch (e: Exception) {
-            Configuration(enable = false)
+            Configuration(enable = false, autoClearEnable = false, autoClearStrategies = mutableListOf(), -1)
         }
+    }
+
+    fun addAutoClearStrategy(strategyInfo: AutoClearStrategyInfo) {
+        configuration.autoClearStrategies.add(strategyInfo)
+        workHandler.post(this::saveConfiguration)
+    }
+
+    fun removeAutoClearStrategy(packageName: String) {
+        configuration.autoClearStrategies.removeIf {
+            it.packageName == packageName
+        }
+        workHandler.post(this::saveConfiguration)
     }
 
     private fun readFromFile(): String {
