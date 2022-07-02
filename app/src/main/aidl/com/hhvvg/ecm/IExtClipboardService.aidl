@@ -12,6 +12,11 @@ interface IExtClipboardService {
 
     void setAutoClearEnable(boolean enable);
     boolean isAutoClearEnable();
+    int getAutoClearWorkMode();
+    void setAutoClearWorkMode(int mode);
+    int getAutoClearReadCount();
+    void setAutoClearReadCount(int count);
+
     void setAutoClearTimeout(long timeout);
     long getAutoClearTimeout();
 

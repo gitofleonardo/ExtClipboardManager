@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatEditText
+        android:elegantTextHeight="true"
         android:inputType="number"
         style="@style/Widget.Material3.TextInputEditText.FilledBox.Dense"
         android:id="@+id/text_input"

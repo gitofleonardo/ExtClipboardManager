@@ -2,6 +2,9 @@ package com.hhvvg.ecm
 
 import android.content.Context
 import com.hhvvg.ecm.service.ExtendedClipboardService
+import com.hhvvg.ecm.util.afterConstructor
+import com.hhvvg.ecm.util.asClass
+import com.hhvvg.ecm.util.setExtraField
 import de.robv.android.xposed.*
 import de.robv.android.xposed.callbacks.XC_LoadPackage
 

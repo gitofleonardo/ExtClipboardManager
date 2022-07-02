@@ -1,10 +1,11 @@
-package com.hhvvg.ecm
+package com.hhvvg.ecm.util
 
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import com.hhvvg.ecm.IExtClipboardService
 import com.hhvvg.ecm.service.ExtendedClipboardService
 import de.robv.android.xposed.XC_MethodHook
 import de.robv.android.xposed.XposedBridge

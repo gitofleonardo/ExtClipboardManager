@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hhvvg.ecm.configuration.AutoClearStrategyInfo
-import com.hhvvg.ecm.getSystemExtClipboardService
+import com.hhvvg.ecm.util.getSystemExtClipboardService
 import com.hhvvg.ecm.ui.data.AutoClearAppItem
 import com.hhvvg.ecm.ui.model.AppsModel
 import kotlinx.coroutines.Dispatchers

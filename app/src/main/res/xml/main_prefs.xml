@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="@string/management_title">
         <SwitchPreferenceCompat
@@ -18,6 +19,7 @@
             android:summary="@string/auto_clear_summary"
             android:dependency="enable_management"/>
         <SwitchPreferenceCompat
+            android:dependency="enable_management"
             android:icon="@drawable/ic_baseline_clock_24"
             android:key="auto_clear_timeout"
             android:title="@string/auto_clear_timeout_title"

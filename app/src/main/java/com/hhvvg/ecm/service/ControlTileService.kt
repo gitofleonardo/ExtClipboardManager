@@ -5,7 +5,7 @@ import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import androidx.annotation.RequiresApi
 import com.hhvvg.ecm.IExtClipboardService
-import com.hhvvg.ecm.getSystemExtClipboardService
+import com.hhvvg.ecm.util.getSystemExtClipboardService
 
 /**
  * @author hhvvg

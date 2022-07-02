@@ -18,8 +18,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.hhvvg.ecm.R
-import com.hhvvg.ecm.getSystemExtClipboardService
-import com.hhvvg.ecm.themeColor
+import com.hhvvg.ecm.util.getSystemExtClipboardService
+import com.hhvvg.ecm.util.themeColor
 import com.hhvvg.ecm.ui.view.InputBottomSheetDialog
 import kotlinx.coroutines.launch
 
@@ -60,8 +60,19 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
 
     private fun setupTimeoutClearPref() {
         timeoutClearSwitchPref = findPreference("auto_clear_timeout")!!
-        timeoutClearSwitchPref.isChecked = (extService?.autoClearTimeout ?: -1L) > 0
+        val timeout = extService?.autoClearTimeout ?: -1
+        timeoutClearSwitchPref.isChecked = timeout > 0
+        timeoutClearSwitchPref.summary = getTimeoutSummary()
         timeoutClearSwitchPref.onPreferenceChangeListener = this
+    }
+
+    private fun getTimeoutSummary(): CharSequence {
+        val timeout = extService?.autoClearTimeout ?: -1L
+        return if (timeout > 0) {
+            getString(R.string.auto_clear_timeout_summary, "$timeout")
+        } else {
+            getString(R.string.auto_clear_timeout_summary_off)
+        }
     }
 
     private fun showInputDialogForTimeout() {
@@ -74,8 +85,9 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
             .build()
         lifecycleScope.launch {
             val result = dialog.showDialog().toString().toLongOrNull() ?: -1L
-            if (result != -1L) {
+            if (result > 0) {
                 extService?.autoClearTimeout = result
+                timeoutClearSwitchPref.summary = getString(R.string.auto_clear_timeout_summary, result)
             } else {
                 timeoutClearSwitchPref.onPreferenceChangeListener = null
                 timeoutClearSwitchPref.isChecked = false
@@ -176,6 +188,7 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
                     showInputDialogForTimeout()
                 } else {
                     extService?.autoClearTimeout = -1
+                    timeoutClearSwitchPref.summary = getTimeoutSummary()
                 }
                 true
             }

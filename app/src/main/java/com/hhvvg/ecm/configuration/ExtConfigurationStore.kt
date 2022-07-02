@@ -68,6 +68,18 @@ class ExtConfigurationStore {
             configuration.autoClearTimeout = value
             workHandler.post(this::saveConfiguration)
         }
+    var autoClearWorkMode: Int
+        get() = configuration.workMode
+        set(value) {
+            configuration.workMode = value
+            workHandler.post(this::saveConfiguration)
+        }
+    var autoClearReadCount: Int
+        get() = configuration.readCount
+        set(value) {
+            configuration.readCount = value
+            workHandler.post(this::saveConfiguration)
+        }
 
     init {
         configuration = try {
@@ -75,7 +87,7 @@ class ExtConfigurationStore {
             val gson = Gson()
             gson.fromJson(json, Configuration::class.java)
         }catch (e: Exception) {
-            Configuration(enable = false, autoClearEnable = false, autoClearStrategies = mutableListOf(), -1)
+            Configuration(enable = false, autoClearEnable = false, autoClearStrategies = mutableListOf(), -1, 0, 5)
         }
     }
 

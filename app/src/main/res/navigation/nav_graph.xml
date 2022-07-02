@@ -46,7 +46,8 @@
 
     <fragment
         android:id="@+id/autoClearStrategyFragment"
-        android:name="com.hhvvg.ecm.ui.fragment.AutoClearStrategyFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.AutoClearStrategyManagementFragment"
         android:label="@string/auto_clear_title"
         tools:layout="@layout/fragment_auto_clear_strategy"/>
+
 </navigation>

@@ -9,10 +9,15 @@ import com.hhvvg.ecm.*
 import com.hhvvg.ecm.ExtFramework.Companion.clipboardImplName
 import com.hhvvg.ecm.configuration.AutoClearStrategyInfo
 import com.hhvvg.ecm.configuration.ExtConfigurationStore
+import com.hhvvg.ecm.util.asClass
+import com.hhvvg.ecm.util.doAfter
+import com.hhvvg.ecm.util.getField
+import com.hhvvg.ecm.util.invokeMethod
 import de.robv.android.xposed.XposedBridge
 import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * @author hhvvg
@@ -30,10 +35,10 @@ class ExtendedClipboardService(private val context: Context, private val realCli
     }
     private val delayExecutor = ScheduledThreadPoolExecutor(1, DelayThreadFactory())
     private var currentClearTask: Runnable? = null
+    private val currentCountDown = AtomicInteger(0)
 
     private inner class ClearDelayTask(private val packageName: String, private val callingUserUid: Int): Runnable {
         override fun run() {
-            XposedBridge.log("Scheduling clear task")
             clearClipboard(packageName, callingUserUid)
         }
     }
@@ -75,13 +80,21 @@ class ExtendedClipboardService(private val context: Context, private val realCli
         clipImplClazz.doAfter("getPrimaryClip", String::class.java, Int::class.java) {
             val packageName = it.args[0] as String
             val userId = it.args[1] as Int
-            if (dataStore.autoClearEnable) {
+            XposedBridge.log("package ${packageName} uid ${userId} get clip, count down: ${currentCountDown.get()}")
+            if (!dataStore.enable || !dataStore.autoClearEnable) {
+                return@doAfter
+            }
+            if (currentCountDown.get() <= 0) {
+                return@doAfter
+            }
+            if (currentCountDown.decrementAndGet() <= 0) {
                 clearClipboard(packageName, userId)
             }
         }
         clipImplClazz.doAfter("setPrimaryClip", ClipData::class.java, String::class.java, Int::class.java) {
-            XposedBridge.log("ClipData set, scheduling timeout clear")
-            if (dataStore.autoClearTimeout <= 0) {
+            resetReadCount()
+            XposedBridge.log("set clipboard, count remain: ${currentCountDown.get()}")
+            if (!dataStore.enable || dataStore.autoClearTimeout <= 0) {
                 return@doAfter
             }
             val packageName = it.args[1] as String
@@ -89,12 +102,10 @@ class ExtendedClipboardService(private val context: Context, private val realCli
             currentClearTask?.let { task -> delayExecutor.remove(task) }
             currentClearTask = ClearDelayTask(packageName, uid)
             delayExecutor.schedule(currentClearTask, autoClearTimeout, TimeUnit.SECONDS)
-            XposedBridge.log("Auto clear task scheduled")
         }
     }
 
     private fun clearClipboard(packageName: String, userId: Int) {
-        XposedBridge.log("Clearing clipboard")
         val intendingUid = realClipboardService.invokeMethod("getIntendingUid", arrayOf(String::class.java, Int::class.java), packageName, userId)
         synchronized(mLock) {
             realClipboardService.invokeMethod("setPrimaryClipInternalLocked", arrayOf(ClipData::class.java, Int::class.java, String::class.java), null, intendingUid, packageName)
@@ -112,6 +123,23 @@ class ExtendedClipboardService(private val context: Context, private val realCli
     }
 
     override fun isAutoClearEnable(): Boolean = dataStore.autoClearEnable
+
+    override fun getAutoClearWorkMode(): Int = dataStore.autoClearWorkMode
+
+    override fun setAutoClearWorkMode(mode: Int) {
+        dataStore.autoClearWorkMode = mode
+    }
+
+    override fun getAutoClearReadCount(): Int = dataStore.autoClearReadCount
+
+    override fun setAutoClearReadCount(count: Int) {
+        dataStore.autoClearReadCount = count
+        resetReadCount()
+    }
+
+    private fun resetReadCount() {
+        currentCountDown.set(dataStore.autoClearReadCount)
+    }
 
     override fun setAutoClearTimeout(timeout: Long) {
         dataStore.autoClearTimeout = timeout

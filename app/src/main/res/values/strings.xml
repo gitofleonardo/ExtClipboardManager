@@ -18,7 +18,7 @@
     <string name="auto_clear_title">Auto Clear</string>
     <string name="auto_clear_management">Auto Clear Management</string>
     <string name="auto_clear_strategy">Auto Clear Strategy</string>
-    <string name="auto_clear_summary">Auto clear your clipboard when reaching some conditions</string>
+    <string name="auto_clear_summary">Automatically clear your clipboard when reaching some conditions</string>
     <string name="filter_app_read_title">Filter App Read</string>
     <string name="filter_app_write_title">Filter App Write</string>
     <string name="filter_app_read_summary">Filtering apps for reading from your clipboard</string>
@@ -32,9 +32,23 @@
     <string name="show_system_packages">Show System Packages</string>
     <string name="filter">Filter</string>
     <string name="auto_clear_timeout_title">Timeout Clear</string>
-    <string name="auto_clear_timeout_summary">Automatically clear clipboard when timeout</string>
+    <string name="auto_clear_timeout_summary">Automatically clear clipboard after %s seconds</string>
+    <string name="auto_clear_timeout_summary_off">Automatically clear clipboard when time is out</string>
     <string name="confirm_text">OK</string>
     <string name="cancel_text">Cancel</string>
     <string name="timeout_input_title">Input Timeout</string>
     <string name="timeout_input_hint">Input timeout in seconds</string>
+    <string name="auto_clear_read_count_title">Read Count</string>
+    <string name="auto_clear_read_count_hint">Enter a count number</string>
+    <string name="auto_clear_read_count_summary">When read count of clipboard reaches %s times, clipboard data will be automatically cleared</string>
+    <string name="auto_clear_exclude_title">Content Exclusion</string>
+    <string name="auto_clear_exclude_summary">Automatically clear will not take effect when clipboard data matches these pattern</string>
+    <string name="auto_clear_whitelist">Whitelist</string>
+    <string name="auto_clear_blacklist">Blacklist</string>
+    <string name="auto_clear_work_mode">Work Mode</string>
+
+    <string-array name="work_mode_entry_values">
+        <item>Whitelist</item>
+        <item>Blacklist</item>
+    </string-array>
 </resources>

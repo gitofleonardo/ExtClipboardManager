@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.hhvvg.ecm.R
 import com.hhvvg.ecm.databinding.FragmentAutoClearStrategyBinding
@@ -44,6 +45,11 @@ class AutoClearStrategyFragment : Fragment(), SearchView.OnQueryTextListener {
             items.clear()
             items.addAll(it)
             adapter.notifyDataSetChanged()
+
+            binding?.apply {
+                autoClearRecyclerview.isVisible = true
+                progressBar.isVisible = false
+            }
         }
         viewModel.loadApps(requireContext())
     }

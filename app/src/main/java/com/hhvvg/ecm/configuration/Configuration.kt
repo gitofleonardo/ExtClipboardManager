@@ -8,4 +8,6 @@ data class Configuration(
     var autoClearEnable: Boolean,
     var autoClearStrategies: MutableList<AutoClearStrategyInfo>,
     var autoClearTimeout: Long,
+    var workMode: Int,
+    var readCount: Int,
 )
