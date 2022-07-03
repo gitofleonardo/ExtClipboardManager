@@ -59,4 +59,5 @@
     <string name="exclusion_content_hint">Support plain text/regex </string>
     <string name="exclusion_content_title">Input Content</string>
     <string name="exclusion_list_label">Exclusion List</string>
+    <string name="filter_apps">Filter Apps</string>
 </resources>

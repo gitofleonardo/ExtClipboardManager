@@ -3,10 +3,11 @@ package com.hhvvg.ecm.ui.data
 import android.graphics.drawable.Drawable
 import com.hhvvg.ecm.configuration.AutoClearStrategyInfo
 
-data class AutoClearAppItem(
+open class AppItem(
     val packageName: String,
     val appName: String,
     val appIcon: Drawable,
-    val strategy: AutoClearStrategyInfo,
     val flags: Int,
-)
+) {
+    constructor(appItem: AppItem): this(appItem.packageName, appItem.appName, appItem.appIcon, appItem.flags)
+}

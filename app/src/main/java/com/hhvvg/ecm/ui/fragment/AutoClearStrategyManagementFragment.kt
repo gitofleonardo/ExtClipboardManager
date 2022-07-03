@@ -55,6 +55,23 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
         setupWorkModePref()
         setupReadCountPref()
         setupContentExclusionPref()
+        setupListPref()
+    }
+
+    private fun setupListPref() {
+        blacklistPref.setOnPreferenceClickListener {
+            openModeListFragment()
+            true
+        }
+        whitelistPref.setOnPreferenceClickListener {
+            openModeListFragment()
+            true
+        }
+    }
+
+    private fun openModeListFragment() {
+        val action = AutoClearStrategyManagementFragmentDirections.actionAutoClearStrategyFragmentToWorkModeListFragment()
+        navController.navigate(action)
     }
 
     private fun setupContentExclusionPref() {

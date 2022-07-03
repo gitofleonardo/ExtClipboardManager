@@ -55,7 +55,19 @@
             app:exitAnim="@anim/anim_open_exit"
             app:popEnterAnim="@anim/anim_close_enter"
             app:popExitAnim="@anim/anim_close_exit"/>
+        <action
+            android:id="@+id/action_autoClearStrategyFragment_to_workModeListFragment"
+            app:destination="@id/workModeListFragment"
+            app:enterAnim="@anim/anim_open_enter"
+            app:exitAnim="@anim/anim_open_exit"
+            app:popEnterAnim="@anim/anim_close_enter"
+            app:popExitAnim="@anim/anim_close_exit"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/workModeListFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.WorkModeListFragment"
+        android:label="@string/filter_apps"/>
 
     <fragment
         android:id="@+id/autoClearExclusionListFragment"

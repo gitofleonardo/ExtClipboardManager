@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.AutoClearStrategyFragment">
+    tools:context=".ui.base.BaseAppListFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:id="@+id/auto_clear_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/auto_clear_strategy_item_layout"/>
+        tools:listitem="@layout/auto_work_mode_item_layout"/>
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_gravity="center"

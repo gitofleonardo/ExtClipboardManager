@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hhvvg.ecm.configuration.AutoClearStrategyInfo
 import com.hhvvg.ecm.util.getSystemExtClipboardService
-import com.hhvvg.ecm.ui.data.AutoClearAppItem
+import com.hhvvg.ecm.ui.data.AppItem
 import com.hhvvg.ecm.ui.model.AppsModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ import kotlinx.coroutines.withContext
 class AutoClearStrategyViewModel : ViewModel() {
     private val appsModel = AppsModel()
 
-    val appItems = MutableLiveData<List<AutoClearAppItem>>()
-    private val currentItems = ArrayList<AutoClearAppItem>()
+    val appItems = MutableLiveData<List<AppItem>>()
+    private val currentItems = ArrayList<AppItem>()
     private var currentShowSystemPackages: Boolean = false
     private var currentFilterText = ""
 
@@ -46,7 +46,7 @@ class AutoClearStrategyViewModel : ViewModel() {
         }
     }
 
-    private fun filter(items: List<AutoClearAppItem>, showSystemPackages: Boolean, filterText: String): List<AutoClearAppItem> {
+    private fun filter(items: List<AppItem>, showSystemPackages: Boolean, filterText: String): List<AppItem> {
         return items.filter {
             val filterSystemPassed = if (showSystemPackages) {
                 true
@@ -58,15 +58,12 @@ class AutoClearStrategyViewModel : ViewModel() {
         }
     }
 
-    private suspend fun createAppItemList(pm: PackageManager, apps: List<ApplicationInfo>, strategies: List<AutoClearStrategyInfo>): List<AutoClearAppItem> = withContext(Dispatchers.Default) {
+    private suspend fun createAppItemList(pm: PackageManager, apps: List<ApplicationInfo>, strategies: List<AutoClearStrategyInfo>): List<AppItem> = withContext(Dispatchers.Default) {
         return@withContext apps.map {
-            AutoClearAppItem(
+            AppItem(
                 it.packageName,
                 it.loadLabel(pm).toString(),
                 it.loadIcon(pm),
-                strategies.find { strategy->
-                    strategy.packageName == it.packageName
-                } ?: AutoClearStrategyInfo(it.packageName),
                 it.flags
             )
         }

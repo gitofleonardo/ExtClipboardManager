@@ -1,4 +1,4 @@
-package com.hhvvg.ecm.ui.fragment
+package com.hhvvg.ecm.ui.base
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -6,32 +6,33 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.hhvvg.ecm.R
-import com.hhvvg.ecm.databinding.FragmentAutoClearStrategyBinding
-import com.hhvvg.ecm.ui.adapter.AutoClearListAdapter
-import com.hhvvg.ecm.ui.data.AutoClearAppItem
+import com.hhvvg.ecm.databinding.FragmentBaseAppListBinding
+import com.hhvvg.ecm.ui.data.AppItem
 import com.hhvvg.ecm.ui.viewmodel.AutoClearStrategyViewModel
 
-class AutoClearStrategyFragment : Fragment(), SearchView.OnQueryTextListener {
+abstract class BaseAppListFragment<T : AppItem> : Fragment(), SearchView.OnQueryTextListener {
 
-    companion object {
-        fun newInstance() = AutoClearStrategyFragment()
-    }
+    abstract fun onCreateAppListAdapter(items: MutableList<T>): RecyclerView.Adapter<*>
+    abstract fun onCreateAppItem(appItem: AppItem): T
 
     private lateinit var viewModel: AutoClearStrategyViewModel
     private lateinit var searchView: SearchView
-    private var binding: FragmentAutoClearStrategyBinding? = null
-    private val items = ArrayList<AutoClearAppItem>()
-    private var adapter = AutoClearListAdapter(items)
+    private var binding: FragmentBaseAppListBinding? = null
+    private val items = ArrayList<T>()
+    private val adapter by lazy {
+        onCreateAppListAdapter(items)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_auto_clear_strategy, container, false)
-        binding = FragmentAutoClearStrategyBinding.bind(view)
+        val view = inflater.inflate(R.layout.fragment_base_app_list, container, false)
+        binding = FragmentBaseAppListBinding.bind(view)
         binding?.autoClearRecyclerview?.apply {
-            adapter = this@AutoClearStrategyFragment.adapter
+            adapter = this@BaseAppListFragment.adapter
         }
         setHasOptionsMenu(true)
         requireActivity().invalidateOptionsMenu()
@@ -43,7 +44,7 @@ class AutoClearStrategyFragment : Fragment(), SearchView.OnQueryTextListener {
         viewModel = ViewModelProvider(this).get(AutoClearStrategyViewModel::class.java)
         viewModel.appItems.observe(viewLifecycleOwner) {
             items.clear()
-            items.addAll(it)
+            items.addAll(it.map { item -> onCreateAppItem(item) })
             adapter.notifyDataSetChanged()
 
             binding?.apply {
