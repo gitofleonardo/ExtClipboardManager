@@ -147,6 +147,9 @@ class ExtendedClipboardService(
         if (!dataStore.enable || !dataStore.autoClearEnable) {
             return
         }
+        if (packageName == BuildConfig.PACKAGE_NAME) {
+            return
+        }
         if (clipDataExclude(clipData)) {
             return
         }
@@ -290,7 +293,6 @@ class ExtendedClipboardService(
     override fun removeStrategy(packageName: String) {
         dataStore.removeAutoClearStrategy(packageName)
     }
-
 
     private fun createBinderIntent(binder: IBinder): Intent {
         return Intent().apply {

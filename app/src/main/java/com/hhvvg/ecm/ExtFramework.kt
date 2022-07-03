@@ -29,6 +29,6 @@ class ExtFramework : IXposedHookLoadPackage, IXposedHookZygoteInit {
     }
 
     override fun initZygote(p0: IXposedHookZygoteInit.StartupParam) {
-
+        // Do nothing
     }
 }

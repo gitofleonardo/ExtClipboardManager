@@ -60,4 +60,5 @@
     <string name="exclusion_content_title">Input Content</string>
     <string name="exclusion_list_label">Exclusion List</string>
     <string name="filter_apps">Filter Apps</string>
+    <string name="strategy_title">Strategy</string>
 </resources>
