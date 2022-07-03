@@ -15,9 +15,8 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
     private var maxLines: Int = 1
     private var titleText: CharSequence = ""
     private var hintText: CharSequence = ""
-    private var onCancelResult: CharSequence = ""
-    private var inputType = InputType.TYPE_NULL
-    private var result: CharSequence? = null
+    private var inputType = InputType.TYPE_CLASS_TEXT
+    private var result: ActionResult = ActionResult.CancelAction
     private var originText: CharSequence = ""
     private var autoRequireFocus: Boolean = true
 
@@ -38,21 +37,16 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
         setContentView(binding.root)
     }
 
-    suspend fun showDialog(): CharSequence = suspendCoroutine {
+    suspend fun showDialog(): ActionResult = suspendCoroutine {
         show()
         setOnDismissListener { _ ->
-            val realResult = result
-            if (realResult == null) {
-                it.resume(onCancelResult)
-            } else {
-                it.resume(realResult)
-            }
+            it.resume(result)
         }
-        binding.buttonCancel.setOnClickListener { _ ->
+        binding.buttonCancel.setOnClickListener {
             dismiss()
         }
-        binding.buttonConfirm.setOnClickListener { _ ->
-            result = binding.textInput.text?.toString()
+        binding.buttonConfirm.setOnClickListener {
+            result = ActionResult.ConfirmResult(binding.textInput.text?.toString() ?: "")
             dismiss()
         }
     }
@@ -77,11 +71,6 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
             return this
         }
 
-        fun setOnCancelResult(onCancelResult: CharSequence): Builder {
-            dialog.onCancelResult = onCancelResult
-            return this
-        }
-
         fun setInputType(type: Int): Builder {
             dialog.inputType = type
             return this
@@ -100,5 +89,10 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
         fun build(): InputBottomSheetDialog {
             return dialog
         }
+    }
+
+    sealed interface ActionResult {
+        object CancelAction : ActionResult
+        class ConfirmResult(val result: CharSequence) : ActionResult
     }
 }

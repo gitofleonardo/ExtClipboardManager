@@ -109,6 +109,13 @@ class ExtendedClipboardService(
         scheduleAutoClearTimeoutTask(packageName, userId)
     }
 
+    private fun rescheduleCurrentAutoClearTimeoutTask() {
+        removeCurrentAutoClearTask()
+        currentClearTask?.let {
+            delayExecutor.schedule(it, autoClearTimeout, TimeUnit.SECONDS)
+        }
+    }
+
     private fun scheduleAutoClearTimeoutTask(packageName: String, userId: Int) {
         removeCurrentAutoClearTask()
         currentClearTask = ClearDelayTask(packageName, userId)
@@ -267,6 +274,7 @@ class ExtendedClipboardService(
 
     override fun setAutoClearTimeout(timeout: Long) {
         dataStore.autoClearTimeout = timeout
+        rescheduleCurrentAutoClearTimeoutTask()
     }
 
     override fun getAutoClearTimeout(): Long {

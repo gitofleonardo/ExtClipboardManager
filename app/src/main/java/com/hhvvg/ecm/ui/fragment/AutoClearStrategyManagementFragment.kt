@@ -73,13 +73,20 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
                 .setTitle(getString(R.string.auto_clear_read_count_title))
                 .setInputType(InputType.TYPE_CLASS_NUMBER)
                 .setHint(getString(R.string.auto_clear_read_count_hint))
-                .setOnCancelResult("")
+                .setText("$readCount")
                 .build()
             lifecycleScope.launch {
-                val result = dialog.showDialog().toString().toIntOrNull() ?: -1
-                if (result > 0) {
-                    readCount = result
-                    readCountPref.summary = getString(R.string.auto_clear_read_count_summary, "$readCount")
+                when(val result = dialog.showDialog()) {
+                    is InputBottomSheetDialog.ActionResult.ConfirmResult -> {
+                        val count = result.result.toString().toIntOrNull()
+                        if (count != null && count > 0) {
+                            readCount = count
+                            readCountPref.summary = getString(R.string.auto_clear_read_count_summary, "$count")
+                        }
+                    }
+                    else -> {
+                        // Do nothing
+                    }
                 }
             }
             true
@@ -87,7 +94,6 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
     }
 
     private fun setupWorkModePref() {
-        val arr = resources.getStringArray(R.array.work_mode_entry_keys)
         if (workMode in 0..1) {
             workModePref.value = "$workMode"
         }

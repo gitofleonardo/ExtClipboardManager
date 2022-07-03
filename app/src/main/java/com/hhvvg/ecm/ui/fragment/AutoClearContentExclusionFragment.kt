@@ -73,15 +73,21 @@ class AutoClearContentExclusionFragment : Fragment() {
             .setText(origin)
             .setTitle(getString(R.string.exclusion_content_title))
             .setHint(getString(R.string.exclusion_content_hint))
-            .setOnCancelResult("")
             .setInputType(InputType.TYPE_CLASS_TEXT)
             .build()
         lifecycleScope.launch {
-            val result = dialog.showDialog().toString()
-            if (result.isNotEmpty()) {
-                items[position] = result
-                adapter.notifyItemChanged(position)
-                saveServiceItems(items)
+            when(val result = dialog.showDialog()) {
+                is InputBottomSheetDialog.ActionResult.ConfirmResult -> {
+                    val text = result.result
+                    if (text.isNotEmpty()) {
+                        items[position] = text.toString()
+                        adapter.notifyItemChanged(position)
+                        saveServiceItems(items)
+                    }
+                }
+                else -> {
+                    // Do nothing
+                }
             }
         }
     }
@@ -90,16 +96,22 @@ class AutoClearContentExclusionFragment : Fragment() {
         val dialog = InputBottomSheetDialog.Builder(requireContext())
             .setTitle(getString(R.string.exclusion_content_title))
             .setHint(getString(R.string.exclusion_content_hint))
-            .setOnCancelResult("")
             .setInputType(InputType.TYPE_CLASS_TEXT)
             .build()
         lifecycleScope.launch {
-            val result = dialog.showDialog().toString()
-            if (result.isNotEmpty()) {
-                items.add(result)
-                adapter.notifyItemInserted(items.size - 1)
-                adapter.notifyItemChanged(items.size - 1)
-                saveServiceItems(items)
+            when (val result = dialog.showDialog()) {
+                is InputBottomSheetDialog.ActionResult.ConfirmResult -> {
+                    val text = result.result
+                    if (text.isNotEmpty()) {
+                        items.add(text.toString())
+                        adapter.notifyItemInserted(items.size - 1)
+                        adapter.notifyItemChanged(items.size - 1)
+                        saveServiceItems(items)
+                    }
+                }
+                else -> {
+                    // Do nothing
+                }
             }
         }
     }

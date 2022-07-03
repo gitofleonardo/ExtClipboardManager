@@ -80,18 +80,26 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
             .setMaxLines(1)
             .setTitle(requireContext().getString(R.string.timeout_input_title))
             .setHint(requireContext().getString(R.string.timeout_input_hint))
-            .setOnCancelResult("")
             .setInputType(InputType.TYPE_CLASS_NUMBER)
             .build()
         lifecycleScope.launch {
-            val result = dialog.showDialog().toString().toLongOrNull() ?: -1L
-            if (result > 0) {
-                extService?.autoClearTimeout = result
-                timeoutClearSwitchPref.summary = getString(R.string.auto_clear_timeout_summary, result)
-            } else {
-                timeoutClearSwitchPref.onPreferenceChangeListener = null
-                timeoutClearSwitchPref.isChecked = false
-                timeoutClearSwitchPref.onPreferenceChangeListener = this@MainFragment
+            when(val result = dialog.showDialog()) {
+                is InputBottomSheetDialog.ActionResult.CancelAction -> {
+                    timeoutClearSwitchPref.onPreferenceChangeListener = null
+                    timeoutClearSwitchPref.isChecked = false
+                    timeoutClearSwitchPref.onPreferenceChangeListener = this@MainFragment
+                }
+                is InputBottomSheetDialog.ActionResult.ConfirmResult -> {
+                    val timeout = result.result.toString().toLongOrNull()
+                    if (timeout != null && timeout > 0) {
+                        extService?.autoClearTimeout = timeout
+                        timeoutClearSwitchPref.summary = getString(R.string.auto_clear_timeout_summary, "$timeout")
+                    } else {
+                        timeoutClearSwitchPref.onPreferenceChangeListener = null
+                        timeoutClearSwitchPref.isChecked = false
+                        timeoutClearSwitchPref.onPreferenceChangeListener = this@MainFragment
+                    }
+                }
             }
         }
     }
