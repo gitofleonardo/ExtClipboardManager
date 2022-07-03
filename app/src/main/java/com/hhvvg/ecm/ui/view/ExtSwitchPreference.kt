@@ -34,11 +34,9 @@ class ExtSwitchPreference(context: Context, attrs: AttributeSet?, defStyleAttr:I
     }
 
 
-    override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+    override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
-        if (holder == null) {
-            return
-        }
+
         iconView = holder.findViewById(R.id.icon_view) as ImageView
         titleView = holder.findViewById(R.id.title_text) as TextView
         summaryView = holder.findViewById(R.id.summary_text) as TextView
@@ -48,8 +46,6 @@ class ExtSwitchPreference(context: Context, attrs: AttributeSet?, defStyleAttr:I
         titleView.text = title
         summaryView.text = summary
         switchView.isChecked = isChecked
-        switchView.setOnClickListener {
-            isChecked = !isChecked
-        }
+        switchView.setOnClickListener(null)
     }
 }
