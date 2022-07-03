@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="ExtSwitch">
+        <attr name="backgroundColor" format="color|reference" />
+        <attr name="colorPrimary" format="color|reference"/>
+        <attr name="thumbColor" format="color|reference" />
+    </declare-styleable>
+</resources>

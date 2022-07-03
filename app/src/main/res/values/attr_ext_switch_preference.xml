@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExtSwitchPreference">
+        <attr name="title" format="reference|string"/>
+        <attr name="summary" format="string|reference"/>
+        <attr name="key" format="string|reference"/>
+        <attr name="icon" format="reference"/>
+        <attr name="dependency" format="string|reference"/>
+        <attr name="enabled" format="boolean"/>
+    </declare-styleable>
+</resources>

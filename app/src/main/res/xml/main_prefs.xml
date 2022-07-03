@@ -3,56 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="@string/management_title">
-        <SwitchPreferenceCompat
-            android:key="enable_management"
-            android:title="@string/management_switch_title"
-            android:icon="@drawable/ic_baseline_edit_24"
-            android:summary="Current status: Available"/>
+        <com.hhvvg.ecm.ui.view.ExtSwitchPreference
+            app:key="enable_management"
+            app:title="@string/management_switch_title"
+            app:icon="@drawable/ic_baseline_edit_24"
+            app:summary="Current status: Available"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/auto_clear_management">
-        <SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_clear_all_24"
-            android:key="auto_clear_key"
-            android:title="@string/auto_clear_title"
-            android:summary="@string/auto_clear_summary"
-            android:dependency="enable_management"/>
-        <SwitchPreferenceCompat
-            android:dependency="enable_management"
-            android:icon="@drawable/ic_baseline_clock_24"
-            android:key="auto_clear_timeout"
-            android:title="@string/auto_clear_timeout_title"
-            android:summary="@string/auto_clear_timeout_summary"/>
+        <com.hhvvg.ecm.ui.view.ExtSwitchPreference
+            app:icon="@drawable/ic_baseline_clear_all_24"
+            app:key="auto_clear_key"
+            app:title="@string/auto_clear_title"
+            app:summary="@string/auto_clear_summary" />
+        <com.hhvvg.ecm.ui.view.ExtSwitchPreference
+            app:icon="@drawable/ic_baseline_clock_24"
+            app:key="auto_clear_timeout"
+            app:title="@string/auto_clear_timeout_title"
+            app:summary="@string/auto_clear_timeout_summary"/>
         <Preference
             android:dependency="auto_clear_key"
             android:key="auto_clear_strategy_key"
             android:title="@string/auto_clear_strategy"/>
     </PreferenceCategory>
 
-    <PreferenceCategory
+    <!-- PreferenceCategory
         android:title="@string/category_filter_summary">
-        <SwitchPreferenceCompat
-            android:icon="@drawable/ic_baseline_text_24"
-            android:dependency="enable_management"
-            android:key="filter_app_read"
-            android:title="@string/filter_app_read_title"
-            android:summary="@string/filter_app_read_summary"/>
+        <com.hhvvg.ecm.ui.view.ExtSwitchPreference
+            app:icon="@drawable/ic_baseline_text_24"
+            app:key="filter_app_read"
+            app:title="@string/filter_app_read_title"
+            app:summary="@string/filter_app_read_summary"/>
         <Preference
             android:key="filter_app_read_strategy"
             android:dependency="filter_app_read"
             android:title="@string/read_strategy_title" />
-        <SwitchPreferenceCompat
-            android:icon="@drawable/ic_outline_pen_24"
-            android:dependency="enable_management"
-            android:key="filter_app_write"
-            android:title="@string/filter_app_write_title"
-            android:summary="@string/filter_app_write_summary"/>
+        <com.hhvvg.ecm.ui.view.ExtSwitchPreference
+            app:icon="@drawable/ic_outline_pen_24"
+            app:key="filter_app_write"
+            app:title="@string/filter_app_write_title"
+            app:summary="@string/filter_app_write_summary"/>
         <Preference
             android:key="filter_app_write_strategy"
             android:dependency="filter_app_write"
             android:title="@string/write_strategy_title" />
-    </PreferenceCategory>
+    </PreferenceCategory -->
 
     <PreferenceCategory
         android:title="@string/about_title">

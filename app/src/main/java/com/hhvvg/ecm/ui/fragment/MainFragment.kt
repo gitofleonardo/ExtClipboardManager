@@ -19,6 +19,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.hhvvg.ecm.R
 import com.hhvvg.ecm.receiver.ServiceStateReceiver
+import com.hhvvg.ecm.ui.view.ExtSwitchPreference
 import com.hhvvg.ecm.util.getSystemExtClipboardService
 import com.hhvvg.ecm.util.themeColor
 import com.hhvvg.ecm.ui.view.InputBottomSheetDialog
@@ -31,12 +32,12 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
     companion object {
         const val MAIN_EVENT_SOURCE = "MainFragmentEventSource"
     }
-    private lateinit var enableSwitchPreference: SwitchPreferenceCompat
-    private lateinit var autoClearSwitchPreference: SwitchPreferenceCompat
-    private lateinit var timeoutClearSwitchPref: SwitchPreferenceCompat
+    private lateinit var enableSwitchPreference: ExtSwitchPreference
+    private lateinit var autoClearSwitchPreference: ExtSwitchPreference
+    private lateinit var timeoutClearSwitchPref: ExtSwitchPreference
     private lateinit var autoClearStrategyPreference: Preference
-    private lateinit var readStrategyPreference: Preference
-    private lateinit var writeStrategyPreference: Preference
+//    private lateinit var readStrategyPreference: Preference
+//    private lateinit var writeStrategyPreference: Preference
     private val extService by lazy {
         requireContext().getSystemExtClipboardService()
     }
@@ -68,8 +69,8 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.main_prefs, rootKey)
         setupEnablePref()
-        setupReadStrategyPref()
-        setupWriteStrategyPref()
+//        setupReadStrategyPref()
+//        setupWriteStrategyPref()
         setupAutoClearPref()
         setupAutoClearStrategyPref()
         setupTimeoutClearPref()
@@ -81,6 +82,7 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
         timeoutClearSwitchPref.isChecked = timeout > 0
         timeoutClearSwitchPref.summary = getTimeoutSummary()
         timeoutClearSwitchPref.onPreferenceChangeListener = this
+        timeoutClearSwitchPref.dependency = "enable_management"
     }
 
     private fun getTimeoutSummary(): CharSequence {
@@ -137,25 +139,26 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
             isChecked = extService?.isAutoClearEnable ?: false
             onPreferenceChangeListener = this@MainFragment
         }
+        autoClearSwitchPreference.dependency = "enable_management"
     }
 
-    private fun setupReadStrategyPref() {
-        readStrategyPreference = findPreference("filter_app_read_strategy")!!
-        readStrategyPreference.setOnPreferenceClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToReadStrategyFragment()
-            navController.navigate(action)
-            true
-        }
-    }
-
-    private fun setupWriteStrategyPref() {
-        writeStrategyPreference = findPreference("filter_app_write_strategy")!!
-        writeStrategyPreference.setOnPreferenceClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToWriteStrategyFragment()
-            navController.navigate(action)
-            true
-        }
-    }
+//    private fun setupReadStrategyPref() {
+//        readStrategyPreference = findPreference("filter_app_read_strategy")!!
+//        readStrategyPreference.setOnPreferenceClickListener {
+//            val action = MainFragmentDirections.actionMainFragmentToReadStrategyFragment()
+//            navController.navigate(action)
+//            true
+//        }
+//    }
+//
+//    private fun setupWriteStrategyPref() {
+//        writeStrategyPreference = findPreference("filter_app_write_strategy")!!
+//        writeStrategyPreference.setOnPreferenceClickListener {
+//            val action = MainFragmentDirections.actionMainFragmentToWriteStrategyFragment()
+//            navController.navigate(action)
+//            true
+//        }
+//    }
 
     private fun setupEnablePref() {
         enableSwitchPreference = findPreference("enable_management")!!
