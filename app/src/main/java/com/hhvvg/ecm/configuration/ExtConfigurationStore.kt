@@ -80,6 +80,27 @@ class ExtConfigurationStore {
             configuration.readCount = value
             workHandler.post(this::saveConfiguration)
         }
+    var autoClearAppBlacklist: List<String>
+        get() = configuration.autoClearAppBlacklist
+        set(value) {
+            configuration.autoClearAppBlacklist.clear()
+            configuration.autoClearAppBlacklist.addAll(value)
+            workHandler.post(this::saveConfiguration)
+        }
+    var autoClearAppWhitelist: List<String>
+        get() = configuration.autoClearAppWhitelist
+        set(value) {
+            configuration.autoClearAppWhitelist.clear()
+            configuration.autoClearAppWhitelist.addAll(value)
+            workHandler.post(this::saveConfiguration)
+        }
+    var autoClearContentExclusionList: List<String>
+        get() = configuration.autoClearContentExclusionList
+        set(value) {
+            configuration.autoClearContentExclusionList.clear()
+            configuration.autoClearContentExclusionList.addAll(value)
+            workHandler.post(this::saveConfiguration)
+        }
 
     init {
         configuration = try {
@@ -87,7 +108,7 @@ class ExtConfigurationStore {
             val gson = Gson()
             gson.fromJson(json, Configuration::class.java)
         }catch (e: Exception) {
-            Configuration(enable = false, autoClearEnable = false, autoClearStrategies = mutableListOf(), -1, 0, 5)
+            Configuration()
         }
     }
 

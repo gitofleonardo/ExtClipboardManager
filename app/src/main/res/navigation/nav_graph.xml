@@ -47,7 +47,19 @@
     <fragment
         android:id="@+id/autoClearStrategyFragment"
         android:name="com.hhvvg.ecm.ui.fragment.AutoClearStrategyManagementFragment"
-        android:label="@string/auto_clear_title"
-        tools:layout="@layout/fragment_auto_clear_strategy"/>
+        android:label="@string/auto_clear_title" >
+        <action
+            android:id="@+id/action_autoClearStrategyFragment_to_autoClearExclusionListFragment"
+            app:destination="@id/autoClearExclusionListFragment"
+            app:enterAnim="@anim/anim_open_enter"
+            app:exitAnim="@anim/anim_open_exit"
+            app:popEnterAnim="@anim/anim_close_enter"
+            app:popExitAnim="@anim/anim_close_exit"/>
+    </fragment>
 
+    <fragment
+        android:id="@+id/autoClearExclusionListFragment"
+        android:name="com.hhvvg.ecm.ui.fragment.AutoClearContentExclusionFragment"
+        android:label="@string/exclusion_list_label"
+        tools:layout="@layout/fragment_auto_clear_content_exclusion"/>
 </navigation>

@@ -3,6 +3,7 @@ package com.hhvvg.ecm.ui.fragment
 import android.os.Bundle
 import android.text.InputType
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -41,6 +42,9 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
         set(value) {
             service?.autoClearReadCount = value
         }
+    private val navController by lazy {
+        findNavController()
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.auto_clear_strategy_pref, rootKey)
@@ -50,6 +54,15 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
         }
         setupWorkModePref()
         setupReadCountPref()
+        setupContentExclusionPref()
+    }
+
+    private fun setupContentExclusionPref() {
+        exclusionPref.setOnPreferenceClickListener {
+            val action = AutoClearStrategyManagementFragmentDirections.actionAutoClearStrategyFragmentToAutoClearExclusionListFragment()
+            navController.navigate(action)
+            true
+        }
     }
 
     private fun setupReadCountPref() {
@@ -76,7 +89,7 @@ class AutoClearStrategyManagementFragment : PreferenceFragmentCompat() {
     private fun setupWorkModePref() {
         val arr = resources.getStringArray(R.array.work_mode_entry_keys)
         if (workMode in 0..1) {
-            workModePref.setDefaultValue(arr[workMode])
+            workModePref.value = "$workMode"
         }
         updateWorkModePref()
         workModePref.setOnPreferenceChangeListener { _, newValue ->

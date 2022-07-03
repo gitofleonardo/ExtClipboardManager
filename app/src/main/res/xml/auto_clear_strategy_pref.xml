@@ -18,9 +18,11 @@
         android:title="@string/auto_clear_exclude_title"
         android:summary="@string/auto_clear_exclude_summary"/>
     <Preference
+        android:summary="@string/auto_clear_whitelist_desc"
         android:key="whitelist_key"
         android:title="@string/auto_clear_whitelist"/>
     <Preference
+        android:summary="@string/auto_clear_blacklist_desc"
         android:key="blacklist_key"
         android:title="@string/auto_clear_blacklist"/>
 </PreferenceScreen>

@@ -1,8 +1,6 @@
 // IExtClipboardService.aidl
 package com.hhvvg.ecm;
 
-// Declare any non-default types here with import statements
-
 import com.hhvvg.ecm.configuration.AutoClearStrategyInfo;
 
 interface IExtClipboardService {
@@ -16,6 +14,12 @@ interface IExtClipboardService {
     void setAutoClearWorkMode(int mode);
     int getAutoClearReadCount();
     void setAutoClearReadCount(int count);
+    void setAutoClearAppWhitelist(in List<String> exclusions);
+    void setAutoClearAppBlacklist(in List<String> exclusions);
+    List<String> getAutoClearAppBlacklist();
+    List<String> getAutoClearAppWhitelist();
+    void setAutoClearContentExclusionList(in List<String> exclusions);
+    List<String> getAutoClearContentExclusionList();
 
     void setAutoClearTimeout(long timeout);
     long getAutoClearTimeout();

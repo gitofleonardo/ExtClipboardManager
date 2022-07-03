@@ -2,7 +2,7 @@
     <string name="app_name">ExtClipboardManager</string>
     <string name="action_settings">Settings</string>
     <string name="main_fragment_label">ExtClipboardManager</string>
-    <string name="tile_control_service_label" >ExtClipboardManager</string>
+    <string name="tile_control_service_label">ExtClipboardManager</string>
     <string name="enabled">Enable</string>
     <string name="disabled">Disable</string>
     <string name="current_service_status">Service status: %s</string>
@@ -44,6 +44,8 @@
     <string name="auto_clear_exclude_title">Content Exclusion</string>
     <string name="auto_clear_exclude_summary">Automatically clear will not take effect when clipboard data matches these pattern</string>
     <string name="auto_clear_whitelist">Whitelist</string>
+    <string name="auto_clear_whitelist_desc">When apps in whitelist read the clipboard, read count will not reduce</string>
+    <string name="auto_clear_blacklist_desc">Only apps in blacklist will reduce the reduce count when they read the clipboard</string>
     <string name="auto_clear_blacklist">Blacklist</string>
     <string name="auto_clear_work_mode">Work Mode</string>
 
@@ -51,4 +53,10 @@
         <item>Whitelist</item>
         <item>Blacklist</item>
     </string-array>
+
+    <string name="add">Add</string>
+    <string name="delete_all">Delete All</string>
+    <string name="exclusion_content_hint">Support plain text/regex </string>
+    <string name="exclusion_content_title">Input Content</string>
+    <string name="exclusion_list_label">Exclusion List</string>
 </resources>

@@ -18,6 +18,8 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
     private var onCancelResult: CharSequence = ""
     private var inputType = InputType.TYPE_NULL
     private var result: CharSequence? = null
+    private var originText: CharSequence = ""
+    private var autoRequireFocus: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +28,10 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
         binding.title.text = titleText
         binding.textInput.hint = hintText
         binding.textInput.inputType = inputType
+        binding.textInput.setText(originText)
+        if (autoRequireFocus) {
+            binding.textInput.requestFocus()
+        }
         if (titleText.isEmpty()) {
             binding.title.isVisible = false
         }
@@ -78,6 +84,16 @@ class InputBottomSheetDialog(context: Context) : BaseBottomSheetDialog(context) 
 
         fun setInputType(type: Int): Builder {
             dialog.inputType = type
+            return this
+        }
+
+        fun setText(text: CharSequence): Builder {
+            dialog.originText = text
+            return this
+        }
+
+        fun setAutoRequireFocus(require: Boolean): Builder {
+            dialog.autoRequireFocus = require
             return this
         }
 
