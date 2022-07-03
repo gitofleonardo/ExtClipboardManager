@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AutoClearStrategyViewModel : ViewModel() {
+class BaseAppListViewModel : ViewModel() {
     private val appsModel = AppsModel()
 
     val appItems = MutableLiveData<List<AppItem>>()

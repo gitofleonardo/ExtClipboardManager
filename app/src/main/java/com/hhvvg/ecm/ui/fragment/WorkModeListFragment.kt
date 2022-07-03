@@ -32,7 +32,7 @@ class WorkModeListFragment : BaseAppListFragment<WorkListItem>() {
     }
 
     override fun onCreateAppItem(appItem: AppItem): WorkListItem {
-        return WorkListItem(appItem)
+        return WorkListItem(appItem, listByWorkMode.contains(appItem.packageName))
     }
 
     override fun onDestroy() {
@@ -50,4 +50,4 @@ class WorkModeListFragment : BaseAppListFragment<WorkListItem>() {
 
 }
 
-class WorkListItem(appItem: AppItem): AppItem(appItem)
+class WorkListItem(appItem: AppItem, var checked: Boolean): AppItem(appItem)

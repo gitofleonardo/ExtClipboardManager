@@ -18,6 +18,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.hhvvg.ecm.R
+import com.hhvvg.ecm.receiver.ServiceStateReceiver
 import com.hhvvg.ecm.util.getSystemExtClipboardService
 import com.hhvvg.ecm.util.themeColor
 import com.hhvvg.ecm.ui.view.InputBottomSheetDialog
@@ -27,6 +28,9 @@ import kotlinx.coroutines.launch
  * @author hhvvg
  */
 class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+    companion object {
+        const val MAIN_EVENT_SOURCE = "MainFragmentEventSource"
+    }
     private lateinit var enableSwitchPreference: SwitchPreferenceCompat
     private lateinit var autoClearSwitchPreference: SwitchPreferenceCompat
     private lateinit var timeoutClearSwitchPref: SwitchPreferenceCompat
@@ -39,6 +43,13 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
     private val navController by lazy {
         findNavController()
     }
+    private val stateReceiver = object : ServiceStateReceiver() {
+        override fun onServiceStateChanged(enable: Boolean, source: String) {
+            if (source != MAIN_EVENT_SOURCE) {
+                enableSwitchPreference.isChecked = enable
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +57,12 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
         requireActivity().invalidateOptionsMenu()
         //Disable scrollbar
         (view.findViewById(android.R.id.list) as ListView?)?.isVerticalScrollBarEnabled = false
+        ServiceStateReceiver.registerStateChangedReceiver(requireContext(), stateReceiver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        requireContext().unregisterReceiver(stateReceiver)
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -206,6 +223,7 @@ class MainFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeLi
             }
             "enable_management" -> {
                 extService?.isEnable = newValue as Boolean
+                ServiceStateReceiver.sendStateChangedBroadcast(requireContext(), newValue, MAIN_EVENT_SOURCE)
                 true
             }
             else -> {

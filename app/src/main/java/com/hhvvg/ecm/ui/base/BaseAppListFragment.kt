@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hhvvg.ecm.R
 import com.hhvvg.ecm.databinding.FragmentBaseAppListBinding
 import com.hhvvg.ecm.ui.data.AppItem
-import com.hhvvg.ecm.ui.viewmodel.AutoClearStrategyViewModel
+import com.hhvvg.ecm.ui.viewmodel.BaseAppListViewModel
 
 abstract class BaseAppListFragment<T : AppItem> : Fragment(), SearchView.OnQueryTextListener {
 
     abstract fun onCreateAppListAdapter(items: MutableList<T>): RecyclerView.Adapter<*>
     abstract fun onCreateAppItem(appItem: AppItem): T
 
-    private lateinit var viewModel: AutoClearStrategyViewModel
+    protected lateinit var viewModel: BaseAppListViewModel
     private lateinit var searchView: SearchView
     private var binding: FragmentBaseAppListBinding? = null
-    private val items = ArrayList<T>()
+    protected val items = ArrayList<T>()
     private val adapter by lazy {
         onCreateAppListAdapter(items)
     }
@@ -41,7 +41,7 @@ abstract class BaseAppListFragment<T : AppItem> : Fragment(), SearchView.OnQuery
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(AutoClearStrategyViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(BaseAppListViewModel::class.java)
         viewModel.appItems.observe(viewLifecycleOwner) {
             items.clear()
             items.addAll(it.map { item -> onCreateAppItem(item) })
