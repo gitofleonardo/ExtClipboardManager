@@ -33,5 +33,14 @@ class AutoClearItemHolder(private val binding: AutoWorkModeItemLayoutBinding, pr
                 packages.remove(item.packageName)
             }
         }
+        binding.root.setOnClickListener {
+            item.checked = !item.checked
+            if (item.checked) {
+                packages.add(item.packageName)
+            } else {
+                packages.remove(item.packageName)
+            }
+            binding.checkbox.isChecked = item.checked
+        }
     }
 }

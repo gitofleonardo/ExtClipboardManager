@@ -16,6 +16,7 @@ abstract class BaseAppListFragment<T : AppItem> : Fragment(), SearchView.OnQuery
 
     abstract fun onCreateAppListAdapter(items: MutableList<T>): RecyclerView.Adapter<*>
     abstract fun onCreateAppItem(appItem: AppItem): T
+    abstract fun onAppListSort(items: List<T>): List<T>
 
     protected lateinit var viewModel: BaseAppListViewModel
     private lateinit var searchView: SearchView
@@ -43,8 +44,9 @@ abstract class BaseAppListFragment<T : AppItem> : Fragment(), SearchView.OnQuery
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(BaseAppListViewModel::class.java)
         viewModel.appItems.observe(viewLifecycleOwner) {
+            val newItems = onAppListSort(it.map { item -> onCreateAppItem(item) })
             items.clear()
-            items.addAll(it.map { item -> onCreateAppItem(item) })
+            items.addAll(newItems)
             adapter.notifyDataSetChanged()
 
             binding?.apply {
