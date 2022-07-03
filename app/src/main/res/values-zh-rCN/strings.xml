@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ExtClipboardManager</string>
+    <string name="action_settings">设置</string>
+    <string name="main_fragment_label">ExtClipboardManager</string>
+    <string name="tile_control_service_label">ExtClipboardManager</string>
+    <string name="enabled">启用</string>
+    <string name="disabled">禁用</string>
+    <string name="current_service_status">服务状态: %s</string>
+    <string name="available">可用</string>
+    <string name="unavailable">不可用</string>
+    <string name="management_switch_title">剪切板管理</string>
+    <string name="source_code">源码</string>
+    <string name="source_code_summary">在Github上查看源码</string>
+    <string name="about_title">关于</string>
+    <string name="management_title">管理</string>
+    <string name="feedback_title">反馈</string>
+    <string name="feedback_desc">在Github上提议题反馈</string>
+    <string name="auto_clear_title">自动清除</string>
+    <string name="auto_clear_management">自动清除管理</string>
+    <string name="auto_clear_strategy">自动清除策略</string>
+    <string name="auto_clear_summary">在达到特定的情况下会自动清除剪切板</string>
+    <string name="filter_app_read_title">过滤应用读</string>
+    <string name="filter_app_write_title">过滤应用写</string>
+    <string name="filter_app_read_summary">过滤能够读取剪切板的应用</string>
+    <string name="filter_app_write_summary">过滤能够写入剪切板的应用</string>
+    <string name="category_filter_summary">过滤管理</string>
+    <string name="read_strategy_title">读策略</string>
+    <string name="write_strategy_title">写策略</string>
+    <string name="read_strategy_summary">读策略管理</string>
+    <string name="write_strategy_summary">写策略管理</string>
+    <string name="share_project">分享</string>
+    <string name="show_system_packages">显示系统应用</string>
+    <string name="filter">过滤</string>
+    <string name="auto_clear_timeout_title">超时清除</string>
+    <string name="auto_clear_timeout_summary">在 %s 秒之后自动清除剪切板</string>
+    <string name="auto_clear_timeout_summary_off">超时之后会自动清除剪切板</string>
+    <string name="confirm_text">确定</string>
+    <string name="cancel_text">取消</string>
+    <string name="timeout_input_title">输入超时时间</string>
+    <string name="timeout_input_hint">输入超时时间（秒）</string>
+    <string name="auto_clear_read_count_title">读次数</string>
+    <string name="auto_clear_read_count_hint">输入读取次数限制</string>
+    <string name="auto_clear_read_count_summary">当读取次数达到 %s 次时，将会自动清除剪切板</string>
+    <string name="auto_clear_exclude_title">内容排除</string>
+    <string name="auto_clear_exclude_summary">自动清除（不包括超时清除）将不会对匹配列表规则的文本内容生效</string>
+    <string name="auto_clear_whitelist">白名单</string>
+    <string name="auto_clear_whitelist_desc">当白名单里的应用读取剪切板的时候，不会触发读取次数限制</string>
+    <string name="auto_clear_blacklist_desc">只有黑名单列表里的应用读取剪切板的时候，才会触发读取次数限制</string>
+    <string name="auto_clear_blacklist">黑名单</string>
+    <string name="auto_clear_work_mode">工作模式</string>
+
+    <string-array name="work_mode_entry_values">
+        <item>白名单</item>
+        <item>黑名单</item>
+    </string-array>
+
+    <string name="add">添加</string>
+    <string name="delete_all">全部删除</string>
+    <string name="exclusion_content_hint">支持文本/正则表达式</string>
+    <string name="exclusion_content_title">输入内容</string>
+    <string name="exclusion_list_label">排除列表</string>
+    <string name="filter_apps">过滤应用</string>
+    <string name="strategy_title">策略</string>
+</resources>
