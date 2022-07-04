@@ -1,8 +1,11 @@
 package com.hhvvg.ecm.service
 
+import android.annotation.TargetApi
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import com.hhvvg.ecm.BuildConfig
@@ -35,7 +38,7 @@ class ExtendedClipboardService(
         const val delayThreadName = "ExtendedClipboardServiceDelayThread"
     }
 
-    private val mLock = realClipboardService.getField<Any>("mLock")!!
+    private val mLock = realClipboardService.getField<Any>("mLock")
 
     private val dataStore by lazy {
         ExtConfigurationStore()
@@ -211,18 +214,46 @@ class ExtendedClipboardService(
     }
 
     private fun clearClipboard(packageName: String, userId: Int) {
-        val intendingUid = realClipboardService.invokeMethod(
-            "getIntendingUid",
-            arrayOf(String::class.java, Int::class.java),
-            packageName,
-            userId
+        val intendingUid = getIntendingUid(packageName, userId)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            clearPrimaryClipSAndLater(packageName, intendingUid)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            clearPrimaryClipPAndLater(intendingUid)
+        }
+    }
+
+    private fun getIntendingUid(packageName: String, userId: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            realClipboardService.invokeMethod(
+                "getIntendingUid",
+                arrayOf(String::class.java, Int::class.java),
+                packageName,
+                userId
+            ) as Int
+        } else {
+            Binder.getCallingUid()
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.P)
+    private fun clearPrimaryClipPAndLater(intendingUserId: Int) {
+        realClipboardService.invokeMethod(
+            "setPrimaryClipInternal",
+            arrayOf(ClipData::class.java, Int::class.java),
+            null,
+            intendingUserId
         )
-        synchronized(mLock) {
+    }
+
+    @TargetApi(Build.VERSION_CODES.S)
+    private fun clearPrimaryClipSAndLater(packageName: String, intendingUserId: Int) {
+        mLock?.let {
             realClipboardService.invokeMethod(
                 "setPrimaryClipInternalLocked",
                 arrayOf(ClipData::class.java, Int::class.java, String::class.java),
                 null,
-                intendingUid,
+                intendingUserId,
                 packageName
             )
         }

@@ -83,7 +83,7 @@ fun Any.setStaticField(field: String, value: Any?) {
 
 fun <T> Any.getField(field: String): T? {
     return try {
-        XposedHelpers.getObjectField(this, field) as T
+        XposedHelpers.getObjectField(this, field) as T?
     } catch (e: Exception) {
         XposedBridge.log(e)
         null
@@ -92,7 +92,7 @@ fun <T> Any.getField(field: String): T? {
 
 fun <T> Class<*>.getStaticField(field: String): T? {
     return try {
-        XposedHelpers.getStaticObjectField(this, field) as T
+        XposedHelpers.getStaticObjectField(this, field) as T?
     }catch (e: Exception) {
         XposedBridge.log(e)
         null
@@ -121,7 +121,7 @@ fun Any.setExtraStaticField(field: String, value: Any?) {
 
 fun <T> Any.getExtraField(field: String): T? {
     return try {
-        XposedHelpers.getAdditionalInstanceField(this, field) as T
+        XposedHelpers.getAdditionalInstanceField(this, field) as T?
     } catch (e: Exception) {
         XposedBridge.log(e)
         null
@@ -130,7 +130,7 @@ fun <T> Any.getExtraField(field: String): T? {
 
 fun <T> Class<*>.getExtraStaticField(field: String): T? {
     return try {
-        XposedHelpers.getAdditionalStaticField(this, field) as T
+        XposedHelpers.getAdditionalStaticField(this, field) as T?
     }catch (e: Exception) {
         XposedBridge.log(e)
         null
